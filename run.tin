@@ -30,5 +30,13 @@
 #PATHDIR          {u}  {d}  {16}
 #PATHDIR          {w}  {e}  {8}
 
-#nop Connect to the mud
+#nop Split the screen to get separate prompt area
+#split
+
+
+#nop Start sessions
+#session session_status 127.0.0.1 9082
 #session arkadia arkadia.rpg.pl 23
+
+#nop Read tintin scripts
+#read tt/stan.tin

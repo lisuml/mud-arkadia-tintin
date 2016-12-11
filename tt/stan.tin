@@ -1,0 +1,35 @@
+#nop Zmienne
+#var stan[zdrowie] {n/a};
+#var stan[mana] {n/a};
+#var stan[strach] {n/a};
+#var stan[zmeczenie] {n/a};
+
+#nop Funkcje
+#function {pokaz_stan} {
+  #format {result} {
+    Zdrowie:   %s\n
+    Mana:      %s\n
+    Strach:    %s\n
+    Zmeczenie: %s\n
+  } {$stan[zdrowie]}
+    {$stan[mana]}
+    {$stan[strach]}
+    {$stan[zmeczenie]};
+}
+
+#nop Tickery
+#ticker {pokaz_stan} {
+  #session_status #send #showme \e[2J;
+  #session_status #send { @pokaz_stan{} };
+} {1}
+
+#nop Akcje
+#action {Jestes fizycznie %1, zas mentalnie %2.} {
+  #var stan[zdrowie] {%1};
+  #var stan[mana] {%2};
+}
+
+#action {Czujesz sie %1 i jestes %2.} {
+  #var stan[strach] {%1};
+  #var stan[zmeczenie] {%2};
+}
