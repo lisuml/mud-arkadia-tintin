@@ -1,35 +1,60 @@
-#nop Zmienne
 #var stan[zdrowie] {n/a};
 #var stan[mana] {n/a};
 #var stan[strach] {n/a};
 #var stan[zmeczenie] {n/a};
+#var stan[pragnienie] {n/a};
+#var stan[sytosc] {n/a};
 
-#nop Funkcje
 #function {pokaz_stan} {
   #format {result} {
-    Zdrowie:   %s\n
-    Mana:      %s\n
-    Strach:    %s\n
-    Zmeczenie: %s\n
+    Zdrowie:    %s\n
+    Mana:       %s\n
+    Strach:     %s\n
+    Zmeczenie:  %s\n
+    Pragnienie: %s\n
+    Sytosc:     %s\n
   } {$stan[zdrowie]}
     {$stan[mana]}
     {$stan[strach]}
-    {$stan[zmeczenie]};
+    {$stan[zmeczenie]}
+    {$stan[pragnienie]}
+    {$stan[sytosc]};
 }
 
-#nop Tickery
 #ticker {pokaz_stan} {
   #session_status #send #showme \e[2J;
-  #session_status #send { @pokaz_stan{} };
+  #session_status {#line substitute colors #send { @pokaz_stan{} }};
 } {1}
 
-#nop Akcje
 #action {Jestes fizycznie %1, zas mentalnie %2.} {
-  #var stan[zdrowie] {%1};
-  #var stan[mana] {%2};
+  #if {"%1" == "w swietnej kondycji"} {
+    #var {kolor} {<029>}
+  };
+  #format {stan[zdrowie]} {${kolor}%l<099>} {%1};
+  #if {"%2" == "w pelni sil"} {
+    #var {kolor} {<029>}
+  };
+  #format {stan[mana]} {${kolor}%l<099>} {%2};
 }
 
 #action {Czujesz sie %1 i jestes %2.} {
-  #var stan[strach] {%1};
-  #var stan[zmeczenie] {%2};
+  #if {"%1" == "bezpiecznie"} {
+    #var {kolor} {<029>}
+  };
+  #format {stan[strach]} {${kolor}%l<099>} {%1};
+  #if {"%2" == "w pelni wypoczety"} {
+    #var {kolor} {<029>}
+  };
+  #format {stan[zmeczenie]} {${kolor}%l<099>} {%2};
+}
+
+#action {%1 pic i jestes %2.} {
+  #if {"%1" == "Chce ci sie bardzo"} {
+    #var {kolor} {<119>}
+  };
+  #format {stan[pragnienie]} {${kolor}%l pic<099>} {%1};
+  #if {"%2" == "glodny"} {
+    #var {kolor} {<119>}
+  };
+  #format {stan[sytosc]} {${kolor}%l<099>} {%2};
 }
