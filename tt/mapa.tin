@@ -1,0 +1,8 @@
+#map read maps/arkadia.map
+#map flag static off
+#map goto 1
+
+#event {MAP ENTER ROOM} {
+    #read tmp/map_size.tin;
+    #map map ${MAP_ROWS}x${MAP_LINES} tmp/map.txt;
+};

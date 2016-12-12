@@ -1,11 +1,18 @@
 #!/bin/bash
 
+# Create tmp directory if not there
+if [ ! -d tmp/ ]
+then
+  mkdir tmp
+fi
+
 # Kill any old session
 tmux kill-session -t arkadia 2> /dev/null
 
 # Start new tmux session and set the panes
 tmux new-session -d -s arkadia 'tintin -G run.tin'
 tmux splitw -h -t arkadia -p 50 'tintin -G conf/conf_status'
+tmux splitw -t arkadia -p 50 'tintin -G conf/conf_map'
 
 # Attach to the session
 tmux selectp -t 0
