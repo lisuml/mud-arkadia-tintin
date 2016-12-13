@@ -13,5 +13,6 @@ W tej chwili działa podział okna. Okno w chwili obcenej podzielone jest na kil
 * Panel stanu, gdzie wyświetlany jest obecny stan postaci (nie są jeszcze obsługiwane wszsystkie stany i ich poziomy ale sukcesywnie je dodaję)
 
 # Zrzuty ekranu
-Zrzut pokazujący obecny stan rzeczy dostępny jest ![tutaj](https://www.dropbox.com/s/ahyj0tsazbu5mb6/arkadia1.png?dl=0).
+Zrzut pokazujący obecny stan rzeczy poniżej:
+![arkadia](https://raw.githubusercontent.com/lisuml/mud-arkadia-tintin/master/screenshots/2016-12-13-1481667011_1920x1080_scrot.png)
 
