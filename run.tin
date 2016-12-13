@@ -36,8 +36,10 @@
 
 #nop Start sessions
 #session session_status 127.0.0.1 9082
+#session session_conversation 127.0.0.1 9083
 #session arkadia arkadia.rpg.pl 23
 
 #nop Read tintin scripts
 #read tt/stan.tin
 #read tt/mapa.tin
+#read tt/rozmowa.tin

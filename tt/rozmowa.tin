@@ -1,0 +1,4 @@
+#action {%1 mowi: %2} {
+ #session_conversation {#line substitute colors #send { <179>%1: <039>%2<099> }};
+ #line {gag};
+}
