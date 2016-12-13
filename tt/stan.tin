@@ -5,6 +5,11 @@
 #var stan[pragnienie] {n/a};
 #var stan[sytosc] {n/a};
 
+#var kolor[dobrze] {<029>};
+#var kolor[srednio] {<139>};
+#var kolor[zle] {<119>};
+#var kolor[default] {<099>};
+
 #function {pokaz_stan} {
   #format {result} {
     Zdrowie:    %s\n
@@ -26,35 +31,44 @@
   #session_status {#line substitute colors #send { @pokaz_stan{} }};
 } {1}
 
-#action {Jestes fizycznie %1, zas mentalnie %2.} {
+#action {^Jestes fizycznie {w swietnej kondycji}, zas mentalnie {w pelni sil}.$} {
   #if {"%1" == "w swietnej kondycji"} {
-    #var {kolor} {<029>}
+    #format {stan[zdrowie]} {%c%l%c} {$kolor[dobrze]} {%1} {$kolor[default]};
   };
-  #format {stan[zdrowie]} {${kolor}%l<099>} {%1};
   #if {"%2" == "w pelni sil"} {
-    #var {kolor} {<029>}
+    #format {stan[mana]} {%c%l%c} {$kolor[dobrze]} {%2} {$kolor[default]};
   };
-  #format {stan[mana]} {${kolor}%l<099>} {%2};
 }
 
-#action {Czujesz sie %1 i jestes %2.} {
+#action {^Czujesz sie {bezpiecznie} i jestes {w pelni wypoczety}.$} {
   #if {"%1" == "bezpiecznie"} {
-    #var {kolor} {<029>}
+    #format {stan[strach]} {%c%l%c} {$kolor[dobrze]} {%1} {$kolor[default]};
   };
-  #format {stan[strach]} {${kolor}%l<099>} {%1};
   #if {"%2" == "w pelni wypoczety"} {
-    #var {kolor} {<029>}
+    #format {stan[zmeczenie]} {%c%l%c} {$kolor[dobrze]} {%2} {$kolor[default]};
   };
-  #format {stan[zmeczenie]} {${kolor}%l<099>} {%2};
 }
 
-#action {%1 pic i jestes %2.} {
-  #if {"%1" == "Chce ci sie bardzo"} {
-    #var {kolor} {<119>}
+#action {^{Chce ci sie bardzo pic} i jestes {glodny|najedzony|bardzo najedzony}.$} {
+  #if {"%1" == "Chce ci sie bardzo pic"} {
+    #format {stan[pragnienie]} {%c%l%c} {$kolor[zle]} {%1} {$kolor[default]};
   };
-  #format {stan[pragnienie]} {${kolor}%l pic<099>} {%1};
   #if {"%2" == "glodny"} {
-    #var {kolor} {<119>}
+    #format {stan[sytosc]} {%c%l%c} {$kolor[zle]} {%2} {$kolor[default]};
   };
-  #format {stan[sytosc]} {${kolor}%l<099>} {%2};
+  #if {"%2" == "najedzony"} {
+    #format {stan[sytosc]} {%c%l%c} {$kolor[srednio]} {%2} {$kolor[default]};
+  };
+  #if {"%2" == "bardzo najedzony"} {
+    #format {stan[sytosc]} {%c%l%c} {$kolor[dobrze]} {%2} {$kolor[default]};
+  };
+}
+
+#action {^Jestes {bardzo najedozny}.$} {
+  #if {"%1" == "bardzo najedzony"} {
+    #format {stan[sytosc]} {%c%l%c} {$kolor[dobrze]} {%2} {$kolor[default]};
+  };
+  #if {"%1" == "najedzony"} {
+    #format {stan[sytosc]} {%c%l%c} {$kolor[srednio]} {%2} {$kolor[default]};
+  };
 }
