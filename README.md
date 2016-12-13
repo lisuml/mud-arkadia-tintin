@@ -14,5 +14,6 @@ W tej chwili działa podział okna. Okno w chwili obcenej podzielone jest na kil
 
 # Zrzuty ekranu
 Zrzut pokazujący obecny stan rzeczy poniżej:
+
 ![arkadia](https://raw.githubusercontent.com/lisuml/mud-arkadia-tintin/master/screenshots/2016-12-13-1481667011_1920x1080_scrot.png)
 
