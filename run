@@ -11,9 +11,9 @@ tmux kill-session -t arkadia 2> /dev/null
 
 # Start new tmux session and set the panes
 tmux new-session -d -s arkadia 'tintin -G run.tin'
-tmux splitw -h -t arkadia -p 50 'tintin -G conf/conf_map'
-tmux splitw -v -t 1 -p 20 'tintin -G conf/conf_conversation'
-tmux splitw -h -t 2 -p 35 'tintin -G conf/conf_status'
+tmux splitw -h -t arkadia -p 50 'tintin -G conf/conf_status'
+tmux splitw -v -t 1 -p 80 'tintin -G conf/conf_map'
+tmux splitw -v -t 2 -p 30 'tintin -G conf/conf_conversation'
 
 # Attach to the session
 tmux selectp -t 0
