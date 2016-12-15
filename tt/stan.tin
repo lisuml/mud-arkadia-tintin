@@ -5,6 +5,7 @@
 #var stan[pragnienie] {n/a};
 #var stan[sytosc] {n/a};
 #var stan[upicie] {n/a};
+#var stan[przeciazenie] {n/a};
 
 #var kolor[dobrze] {<029>};
 #var kolor[srednio] {<139>};
@@ -20,13 +21,15 @@
     Pragnienie: %s\n
     Sytosc:     %s\n
     Upicie:     %s\n
+    Ciezar:     %s\n
   } {$stan[zdrowie]}
     {$stan[mana]}
     {$stan[strach]}
     {$stan[zmeczenie]}
     {$stan[pragnienie]}
     {$stan[sytosc]}
-    {$stan[upicie]};
+    {$stan[upicie]}
+    {$stan[przeciazenie]};
 }
 
 #ticker {pokaz_stan} {
@@ -57,9 +60,12 @@
   #line {gag};
 }
 
-#action {^{Chce ci sie bardzo pic} i jestes {glodny|najedzony|bardzo najedzony}.$} {
+#action {^{Chce ci sie bardzo pic|Nie chce ci sie pic} i jestes {glodny|najedzony|bardzo najedzony}.$} {
   #if {"%1" == "Chce ci sie bardzo pic"} {
     #format {stan[pragnienie]} {%c%l%c} {$kolor[zle]} {%1} {$kolor[default]};
+  };
+  #if {"%1" == "Nie chce ci sie pic"} {
+    #format {stan[pragnienie]} {%c%l%c} {$kolor[dobrze]} {%1} {$kolor[default]};
   };
   #if {"%2" == "glodny"} {
     #format {stan[sytosc]} {%c%l%c} {$kolor[zle]} {%2} {$kolor[default]};
@@ -89,5 +95,15 @@
   #if {"%1" == "trzezwy"} {
     #format {stan[upicie]} {%c%l%c} {$kolor[dobrze]} {%1} {$kolor[default]};
   };
+  #line {gag};
+}
+
+#action {^Czujesz, ze {nie chce ci sie pic}.$} {
+  #format {stan[pragnienie]} {%c%l%c} {$kolor[dobrze]} {%1} {$kolor[default]};
+  #line {gag};
+}
+
+#action {^{Ciezar twego ekwipunku wadzi ci troche}.$} {
+  #format {stan[przeciazenie]} {%c%l%c} {$kolor[dobrze]} {%1} {$kolor[default]};
   #line {gag};
 }
