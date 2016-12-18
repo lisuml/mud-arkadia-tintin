@@ -33,11 +33,20 @@
 #nop Split the screen to get separate prompt area
 #split
 
-
 #nop Start sessions
 #session session_status 127.0.0.1 9082
 #session session_conversation 127.0.0.1 9083
 #session arkadia arkadia.rpg.pl 23
+
+#nop Activate GMCP
+#event {IAC WILL GMCP} {
+  #send {\xFF\xFD\xC9\};
+  #nop send {\xFF\xFA\xC9core.supports.set [ "Core", "Objects", "Room", "Char", "Messages"]\xFF\xF0\};
+  #send {\xFF\xFA\xC9core.supports.set [ "Core", "Objects", "Room", "Char"  ]\xFF\xF0\};
+}
+
+#nop Debug
+#config {debug telnet} off
 
 #nop Read tintin scripts
 #read tt/stan.tin

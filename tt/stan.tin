@@ -3,7 +3,7 @@
 #var stan[strach] {n/a};
 #var stan[zmeczenie] {n/a};
 #var stan[pragnienie] {n/a};
-#var stan[sytosc] {n/a};
+#var stan[glod] {n/a};
 #var stan[upicie] {n/a};
 #var stan[przeciazenie] {n/a};
 
@@ -19,7 +19,7 @@
     Strach:     %s\n
     Zmeczenie:  %s\n
     Pragnienie: %s\n
-    Sytosc:     %s\n
+    Glod:       %s\n
     Upicie:     %s\n
     Ciezar:     %s\n
   } {$stan[zdrowie]}
@@ -27,83 +27,94 @@
     {$stan[strach]}
     {$stan[zmeczenie]}
     {$stan[pragnienie]}
-    {$stan[sytosc]}
+    {$stan[glod]}
     {$stan[upicie]}
     {$stan[przeciazenie]};
 }
 
-#ticker {pokaz_stan} {
+#EVENT {IAC SB GMCP char.state IAC SE} {
+  #var CHAR_STATE {%0};
+
+  #switch {"$CHAR_STATE[hp]"} {
+    #case {"6"}{#format {stan[zdrowie]} {%c%l%c} {$kolor[dobrze]} {w swetnej kondycji} {$kolor[default]}};
+    #case {"5"}{#format {stan[zdrowie]} {%c%l%c} {$kolor[dobrze]} {w dobrym stanie} {$kolor[default]}};
+    #case {"4"}{#format {stan[zdrowie]} {%c%l%c} {$kolor[dobrze]} {lekko ranny} {$kolor[default]}};
+    #case {"3"}{#format {stan[zdrowie]} {%c%l%c} {$kolor[srednio]} {ranny} {$kolor[default]}};
+    #case {"2"}{#format {stan[zdrowie]} {%c%l%c} {$kolor[srednio]} {w zlej kondycji} {$kolor[default]}};
+    #case {"1"}{#format {stan[zdrowie]} {%c%l%c} {$kolor[zle]} {ciezko ranny} {$kolor[default]}};
+    #case {"0"}{#format {stan[zdrowie]} {%c%l%c} {$kolor[zle]} {ledwo zywy} {$kolor[default]}};
+  };
+
+  #switch {"$CHAR_STATE[mana]"} {
+    #case {"8"}{#format {stan[mana]} {%c%l%c} {$kolor[dobrze]} {w pelni sil} {$kolor[default]}};
+    #case {"7"}{#format {stan[mana]} {%c%l%c} {$kolor[dobrze]} {lekko oslabiony} {$kolor[default]}};
+    #case {"6"}{#format {stan[mana]} {%c%l%c} {$kolor[dobrze]} {oslabiony} {$kolor[default]}};
+    #case {"5"}{#format {stan[mana]} {%c%l%c} {$kolor[srednio]} {zmeczony} {$kolor[default]}};
+    #case {"4"}{#format {stan[mana]} {%c%l%c} {$kolor[srednio]} {bardzo zmeczony} {$kolor[default]}};
+    #case {"3"}{#format {stan[mana]} {%c%l%c} {$kolor[srednio]} {w zlej kondycji} {$kolor[default]}};
+    #case {"2"}{#format {stan[mana]} {%c%l%c} {$kolor[zle]} {wyczerpany} {$kolor[default]}};
+    #case {"1"}{#format {stan[mana]} {%c%l%c} {$kolor[zle]} {wykonczony} {$kolor[default]}};
+    #case {"0"}{#format {stan[mana]} {%c%l%c} {$kolor[zle]} {u kresu sil} {$kolor[default]}};
+  };
+
+  #switch {"$CHAR_STATE[panic]"} {
+    #case {"5"}{#format {stan[strach]} {%c%l%c} {$kolor[zle]} {bardzo przerazony} {$kolor[default]}};
+    #case {"4"}{#format {stan[strach]} {%c%l%c} {$kolor[zle]} {przerazony} {$kolor[default]}};
+    #case {"3"}{#format {stan[strach]} {%c%l%c} {$kolor[srednio]} {nerwowo} {$kolor[default]}};
+    #case {"2"}{#format {stan[strach]} {%c%l%c} {$kolor[srednio]} {nieswojo} {$kolor[default]}};
+    #case {"1"}{#format {stan[strach]} {%c%l%c} {$kolor[dobrze]} {spokojnie} {$kolor[default]}};
+    #case {"0"}{#format {stan[strach]} {%c%l%c} {$kolor[dobrze]} {bezpiecznie} {$kolor[default]}};
+  };
+
+  #switch {"$CHAR_STATE[fatigue]"} {
+    #case {"8"}{#format {stan[zmeczenie]} {%c%l%c} {$kolor[zle]} {calkowicie wycienczony} {$kolor[default]}};
+    #case {"7"}{#format {stan[zmeczenie]} {%c%l%c} {$kolor[zle]} {wycienczony} {$kolor[default]}};
+    #case {"6"}{#format {stan[zmeczenie]} {%c%l%c} {$kolor[zl]} {bardzo wyczerpany} {$kolor[default]}};
+    #case {"5"}{#format {stan[zmeczenie]} {%c%l%c} {$kolor[srednio]} {wyczerpany} {$kolor[default]}};
+    #case {"4"}{#format {stan[zmeczenie]} {%c%l%c} {$kolor[srednio]} {nieco wyczerpany} {$kolor[default]}};
+    #case {"3"}{#format {stan[zmeczenie]} {%c%l%c} {$kolor[srednio]} {bardzo zmeczony} {$kolor[default]}};
+    #case {"2"}{#format {stan[zmeczenie]} {%c%l%c} {$kolor[dobrze]} {troche zmeczony} {$kolor[default]}};
+    #case {"1"}{#format {stan[zmeczenie]} {%c%l%c} {$kolor[dobrze]} {wypoczety} {$kolor[default]}};
+    #case {"0"}{#format {stan[zmeczenie]} {%c%l%c} {$kolor[dobrze]} {w pelni wypoczety} {$kolor[default]}};
+  };
+
+  #switch {"$CHAR_STATE[soaked]"} {
+    #case {"3"}{#format {stan[pragnienie]} {%c%l%c} {$kolor[dobrze]} {nie chce ci sie pic} {$kolor[default]}};
+    #case {"2"}{#format {stan[pragnienie]} {%c%l%c} {$kolor[srednio]} {troche chce ci sie pic} {$kolor[default]}};
+    #case {"1"}{#format {stan[pragnienie]} {%c%l%c} {$kolor[zle]} {chce ci sie pic} {$kolor[default]}};
+    #case {"0"}{#format {stan[pragnienie]} {%c%l%c} {$kolor[zle]} {chce ci sie bardzo pic} {$kolor[default]}};
+  };
+
+  #switch {"$CHAR_STATE[stuffed]"} {
+    #case {"3"}{#format {stan[glod]} {%c%l%c} {$kolor[dobrze]} {bardzo najedzony} {$kolor[default]}};
+    #case {"2"}{#format {stan[glod]} {%c%l%c} {$kolor[srednio]} {najedzony} {$kolor[default]}};
+    #case {"1"}{#format {stan[glod]} {%c%l%c} {$kolor[zle]} {glodny} {$kolor[default]}};
+    #case {"0"}{#format {stan[glod]} {%c%l%c} {$kolor[zle]} {bardzo glodny} {$kolor[default]}};
+  };
+
+  #switch {"$CHAR_STATE[intox]"} {
+    #case {"10"}{#format {stan[upicie]} {%c%l%c} {$kolor[zle]} {pijany jak bela} {$kolor[default]}};
+    #case {"9"}{#format {stan[upicie]} {%c%l%c} {$kolor[zle]} {nawalony} {$kolor[default]}};
+    #case {"8"}{#format {stan[upicie]} {%c%l%c} {$kolor[zle]} {napruty} {$kolor[default]}};
+    #case {"7"}{#format {stan[upicie]} {%c%l%c} {$kolor[zle]} {schlany} {$kolor[default]}};
+    #case {"6"}{#format {stan[upicie]} {%c%l%c} {$kolor[zle]} {pijany} {$kolor[default]}};
+    #case {"5"}{#format {stan[upicie]} {%c%l%c} {$kolor[srednio]} {mocno wstawiony} {$kolor[default]}};
+    #case {"4"}{#format {stan[upicie]} {%c%l%c} {$kolor[srednio]} {wstawiony} {$kolor[default]}};
+    #case {"3"}{#format {stan[upicie]} {%c%l%c} {$kolor[srednio]} {podpity} {$kolor[default]}};
+    #case {"2"}{#format {stan[upicie]} {%c%l%c} {$kolor[dobrze]} {lekko podpity} {$kolor[default]}};
+    #case {"1"}{#format {stan[upicie]} {%c%l%c} {$kolor[dobrze]} {podchmielony} {$kolor[default]}};
+    #case {"0"}{#format {stan[upicie]} {%c%l%c} {$kolor[dobrze]} {trzezwy} {$kolor[default]}};
+  };
+
+  #switch {"$CHAR_STATE[encumberance]"} {
+    #case {"5"}{#format {stan[przeciazenie]} {%c%l%c} {$kolor[zle]} {twoj ekwipunek jest niemilosiernie ciezki} {$kolor[default]}};
+    #case {"4"}{#format {stan[przeciazenie]} {%c%l%c} {$kolor[zle]} {twoj ekwipunek jest wyjatkowo ciezki} {$kolor[default]}};
+    #case {"3"}{#format {stan[przeciazenie]} {%c%l%c} {$kolor[srednio]} {ciezar twego ekwipunku jest dosyc klopotliwy} {$kolor[default]}};
+    #case {"2"}{#format {stan[przeciazenie]} {%c%l%c} {$kolor[srednio]} {ciezar twego ekwipunku daje ci sie we znaki} {$kolor[default]}};
+    #case {"1"}{#format {stan[przeciazenie]} {%c%l%c} {$kolor[dobrze]} {ciezar twego ekwipunku wadzi ci troche}  {$kolor[default]}};
+    #case {"0"}{#format {stan[przeciazenie]} {%c%l%c} {$kolor[dobrze]} {ok}  {$kolor[default]}};
+  };
+
   #session_status #send #showme \e[2J;
   #session_status {#line substitute colors #send { @pokaz_stan{} }};
-} {1}
-
-#action {^Jestes fizycznie {w swietnej kondycji}, zas mentalnie {w pelni sil}.$} {
-  #if {"%1" == "w swietnej kondycji"} {
-    #format {stan[zdrowie]} {%c%l%c} {$kolor[dobrze]} {%1} {$kolor[default]};
-  };
-  #if {"%2" == "w pelni sil"} {
-    #format {stan[mana]} {%c%l%c} {$kolor[dobrze]} {%2} {$kolor[default]};
-  };
-  #line {gag};
-}
-
-#action {^Czujesz sie {bezpiecznie} i jestes {w pelni wypoczety|wypoczety}.$} {
-  #if {"%1" == "bezpiecznie"} {
-    #format {stan[strach]} {%c%l%c} {$kolor[dobrze]} {%1} {$kolor[default]};
-  };
-  #if {"%2" == "w pelni wypoczety"} {
-    #format {stan[zmeczenie]} {%c%l%c} {$kolor[dobrze]} {%2} {$kolor[default]};
-  };
-  #if {"%2" == "wypoczety"} {
-    #format {stan[zmeczenie]} {%c%l%c} {$kolor[dobrze]} {%2} {$kolor[default]};
-  };
-  #line {gag};
-}
-
-#action {^{Chce ci sie bardzo pic|Nie chce ci sie pic} i jestes {glodny|najedzony|bardzo najedzony}.$} {
-  #if {"%1" == "Chce ci sie bardzo pic"} {
-    #format {stan[pragnienie]} {%c%l%c} {$kolor[zle]} {%1} {$kolor[default]};
-  };
-  #if {"%1" == "Nie chce ci sie pic"} {
-    #format {stan[pragnienie]} {%c%l%c} {$kolor[dobrze]} {%1} {$kolor[default]};
-  };
-  #if {"%2" == "glodny"} {
-    #format {stan[sytosc]} {%c%l%c} {$kolor[zle]} {%2} {$kolor[default]};
-  };
-  #if {"%2" == "najedzony"} {
-    #format {stan[sytosc]} {%c%l%c} {$kolor[srednio]} {%2} {$kolor[default]};
-  };
-  #if {"%2" == "bardzo najedzony"} {
-    #format {stan[sytosc]} {%c%l%c} {$kolor[dobrze]} {%2} {$kolor[default]};
-  };
-  #line {gag};
-}
-
-#action {^Jestes {bardzo najedozny|najedzony|w swietnej kondycji|wypoczety|trzezwy}.$} {
-  #if {"%1" == "bardzo najedzony"} {
-    #format {stan[sytosc]} {%c%l%c} {$kolor[dobrze]} {%1} {$kolor[default]};
-  };
-  #if {"%1" == "najedzony"} {
-    #format {stan[sytosc]} {%c%l%c} {$kolor[srednio]} {%1} {$kolor[default]};
-  };
-  #if {"%1" == "w swietnej kondycji"} {
-    #format {stan[zdrowie]} {%c%l%c} {$kolor[dobrze]} {%1} {$kolor[default]};
-  };
-  #if {"%1" == "wypoczety"} {
-    #format {stan[zmeczenie]} {%c%l%c} {$kolor[dobrze]} {%1} {$kolor[default]};
-  };
-  #if {"%1" == "trzezwy"} {
-    #format {stan[upicie]} {%c%l%c} {$kolor[dobrze]} {%1} {$kolor[default]};
-  };
-  #line {gag};
-}
-
-#action {^Czujesz, ze {nie chce ci sie pic}.$} {
-  #format {stan[pragnienie]} {%c%l%c} {$kolor[dobrze]} {%1} {$kolor[default]};
-  #line {gag};
-}
-
-#action {^{Ciezar twego ekwipunku wadzi ci troche}.$} {
-  #format {stan[przeciazenie]} {%c%l%c} {$kolor[dobrze]} {%1} {$kolor[default]};
-  #line {gag};
 }
