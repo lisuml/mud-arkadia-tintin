@@ -1,4 +1,10 @@
-#action {%1 mowi: %2} {
- #session_conversation {#line substitute colors #send { <179>%1: <039>%2<099> }};
- #line {gag};
+#event {IAC SB GMCP messages IAC SE} {
+  #var MESSAGE_INFO {%0};
+
+  #if {"$MESSAGE_INFO[type]" == "comm"} {
+    #session_conversation #line #send {$MESSAGE_INFO[text]};
+  }
+  #if {"$MESSAGE_INFO[type]" == "emotes"} {
+    #session_conversation #line #send {$MESSAGE_INFO[text]};
+  }
 }
