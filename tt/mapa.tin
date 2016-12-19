@@ -1,8 +1,17 @@
 #map read maps/arkadia.map
 #map flag static off
-#map goto 1
 
 #event {MAP ENTER ROOM} {
     #read tmp/map_size.tin;
     #map map ${MAP_ROWS}x${MAP_LINES} tmp/map.txt;
 };
+
+#event {IAC SB GMCP room.info IAC SE} {
+  #var ROOM_INFO {%0};
+
+  #nop Lokacje startowe;
+  #var map_position ${ROOM_INFO[map][x]}x${ROOM_INFO[map][y]};
+  #if {"$map_position" == "103x23"} {
+    #map goto 396;
+  };
+}
