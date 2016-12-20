@@ -112,7 +112,7 @@
     #case {"3"}{#format {stan[przeciazenie]} {%c%l%c} {$kolor[srednio]} {ciezar twego ekwipunku jest dosyc klopotliwy} {$kolor[default]}};
     #case {"2"}{#format {stan[przeciazenie]} {%c%l%c} {$kolor[srednio]} {ciezar twego ekwipunku daje ci sie we znaki} {$kolor[default]}};
     #case {"1"}{#format {stan[przeciazenie]} {%c%l%c} {$kolor[dobrze]} {ciezar twego ekwipunku wadzi ci troche}  {$kolor[default]}};
-    #case {"0"}{#format {stan[przeciazenie]} {%c%l%c} {$kolor[dobrze]} {ok}  {$kolor[default]}};
+    #case {"0"}{#format {stan[przeciazenie]} {%c%l%c} {$kolor[dobrze]} {ciezar twego ekwipunku nie wadzi ci ani troche}  {$kolor[default]}};
   };
 
   #session_status #send #showme \e[2J;
