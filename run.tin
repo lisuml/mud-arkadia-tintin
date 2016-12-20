@@ -41,8 +41,7 @@
 #nop Activate GMCP
 #event {IAC WILL GMCP} {
   #send {\xFF\xFD\xC9\};
-  #nop send {\xFF\xFA\xC9core.supports.set [ "Core", "Objects", "Room", "Char", "Messages"]\xFF\xF0\};
-  #send {\xFF\xFA\xC9core.supports.set [ "Core", "Objects", "Room", "Char"  ]\xFF\xF0\};
+  #send {\xFF\xFA\xC9core.supports.set [ "Core", "Objects", "Room", "Char", "Messages"]\xFF\xF0\};
 }
 
 #nop Debug
