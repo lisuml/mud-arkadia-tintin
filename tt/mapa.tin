@@ -9,9 +9,30 @@
 #event {IAC SB GMCP room.info IAC SE} {
   #var ROOM_INFO {%0};
 
-  #nop Lokacje startowe;
-  #var map_position ${ROOM_INFO[map][x]}x${ROOM_INFO[map][y]};
-  #if {"$map_position" == "103x23"} {
+  #var map_position ${ROOM_INFO[map][id]}x${ROOM_INFO[map][x]}x${ROOM_INFO[map][y]};
+  #if {"$map_position" == "35x103x23"} {
     #map goto 396;
   };
+  #if {"$map_position" == "35x91x21"} {
+    #map goto 428;
+  };
+  #if {"$map_position" == "14x63x57"} {
+    #map goto 22;
+  };
+  #if {"$map_position" == "14x51x49"} {
+    #map goto 83;
+  };
+  #if {"$map_position" == "14x71x63"} {
+    #map goto 1;
+  };
+  #action {Znajdujesz sie na drewnianym, dosc szerokim pomoscie, do ktorego dobijaja przyplywajace tu z Nilfgaardu statki z zaopatrzeniem oraz nowymi oddzialami wojska.} {
+    #map goto 531;
+  };
+  #action {Drewniany, bardzo solidny i szeroki pomost wznosi sie nieznacznie ponad spokojnymi wodami zatoki.} {
+    #map goto 531;
+  };
+  #action {Opuszczony zajazd pachnie stechlizna i wilgocia. Czas zajal sie nim na swoja modle, oblepil pajeczyna, wylupil szklo z okien, skruszyl wapno uzywane do bielenia scian. Nie ma tu juz zadnych mebli i przedmiotow. Umilkl gwar rozmow i pokrzykiwania karczmarza.} {
+    #map goto 549;
+  };
+
 }
