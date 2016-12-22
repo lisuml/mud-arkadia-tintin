@@ -25,6 +25,9 @@
   #if {"$map_position" == "14x71x63"} {
     #map goto 1;
   };
+  #if {"$map_position" == "14x65x59"} {
+    #map goto 16;
+  };
   #action {Znajdujesz sie na drewnianym, dosc szerokim pomoscie, do ktorego dobijaja przyplywajace tu z Nilfgaardu statki z zaopatrzeniem oraz nowymi oddzialami wojska.} {
     #map goto 531;
   };
