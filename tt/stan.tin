@@ -69,7 +69,7 @@
   #switch {"$CHAR_STATE[fatigue]"} {
     #case {"8"}{#format {stan[zmeczenie]} {%c%l%c} {$kolor[zle]} {calkowicie wycienczony} {$kolor[default]}};
     #case {"7"}{#format {stan[zmeczenie]} {%c%l%c} {$kolor[zle]} {wycienczony} {$kolor[default]}};
-    #case {"6"}{#format {stan[zmeczenie]} {%c%l%c} {$kolor[zl]} {bardzo wyczerpany} {$kolor[default]}};
+    #case {"6"}{#format {stan[zmeczenie]} {%c%l%c} {$kolor[zle]} {bardzo wyczerpany} {$kolor[default]}};
     #case {"5"}{#format {stan[zmeczenie]} {%c%l%c} {$kolor[srednio]} {wyczerpany} {$kolor[default]}};
     #case {"4"}{#format {stan[zmeczenie]} {%c%l%c} {$kolor[srednio]} {nieco wyczerpany} {$kolor[default]}};
     #case {"3"}{#format {stan[zmeczenie]} {%c%l%c} {$kolor[srednio]} {bardzo zmeczony} {$kolor[default]}};
@@ -106,7 +106,7 @@
     #case {"0"}{#format {stan[upicie]} {%c%l%c} {$kolor[dobrze]} {trzezwy} {$kolor[default]}};
   };
 
-  #switch {"$CHAR_STATE[encumberance]"} {
+  #switch {"$CHAR_STATE[encumbrance]"} {
     #case {"5"}{#format {stan[przeciazenie]} {%c%l%c} {$kolor[zle]} {twoj ekwipunek jest niemilosiernie ciezki} {$kolor[default]}};
     #case {"4"}{#format {stan[przeciazenie]} {%c%l%c} {$kolor[zle]} {twoj ekwipunek jest wyjatkowo ciezki} {$kolor[default]}};
     #case {"3"}{#format {stan[przeciazenie]} {%c%l%c} {$kolor[srednio]} {ciezar twego ekwipunku jest dosyc klopotliwy} {$kolor[default]}};
